@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -49,8 +50,9 @@ namespace PS7_2
 
             while (!inpText.EndOfStream)
             {
-                var charStack = new Stack();
-                var stringStack = new Stack();
+                Stack<char> charStack = new Stack<char>();
+                Stack<char> stringStack = new Stack<char>();
+
 
                 string inpString = inpText.ReadLine();
                 char[] charstring = inpString.ToCharArray();
@@ -63,21 +65,37 @@ namespace PS7_2
                 while (stringStack.Count > 0)
                 {
                     // terminals check
-                    if (terminals.Contains(Convert.ToChar(stringStack.Peek())))
-                    {
-                        Console.WriteLine("found a");
-
-                    }
+                    
                     // nonterminals check
-                    else if (nonterminals.Contains(Convert.ToChar(stringStack.Peek())))
+                    if (nonterminals.Contains(charStack.Peek()))
                     {
-                        
+                        for (int i = 0; i < grammar.Length; i++)
+                        {
+                            //TODO iterate through and find the 
+                            for (int j = 0; j < grammar.GetLength(1); j++)
+                            {
+                                Console.Write(Convert.ToString(grammar[i,j]));
+                            }
+                        }
+                    }
+                    else if (terminals.Contains(charStack.Peek()))
+                    {
+                        if (stringStack.Peek() == charStack.Peek())
+                        {
+                            stringStack.Pop();
+                            charStack.Pop();
+                        }
+                        else
+                        {
+                            Console.WriteLine("no");
+                        }
+
                     }
                 }
 
             }
 
-
+            
 
             Console.ReadLine();
             // read in remaining lines using the parsed int
@@ -89,5 +107,7 @@ namespace PS7_2
             //                Console.ReadLine();
             //            }
         }
+
+        
     }
 }
