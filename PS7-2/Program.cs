@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 
 namespace PS7_2
 {
@@ -57,6 +58,23 @@ namespace PS7_2
                 {
                     stringStack.Push(letter);
                 }
+                charStack.Push(grammar[0,0]);
+                
+                while (stringStack.Count > 0)
+                {
+                    // terminals check
+                    if (terminals.Contains(Convert.ToChar(stringStack.Peek())))
+                    {
+                        Console.WriteLine("found a");
+
+                    }
+                    // nonterminals check
+                    else if (nonterminals.Contains(Convert.ToChar(stringStack.Peek())))
+                    {
+                        
+                    }
+                }
+
             }
 
 
