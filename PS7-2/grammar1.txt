@@ -1,0 +1,9 @@
+ST
+abcd
+4
+S aSd
+S T
+T bTc
+T -
+1 2 0 2 2
+0 3 4 4 4

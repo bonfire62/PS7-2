@@ -1,0 +1,9 @@
+c:\users\adam rosenberg\documents\visual studio 2015\Projects\PS7-2\PS7-2\bin\Debug\PS7-2.exe.config
+c:\users\adam rosenberg\documents\visual studio 2015\Projects\PS7-2\PS7-2\bin\Debug\PS7-2.exe
+c:\users\adam rosenberg\documents\visual studio 2015\Projects\PS7-2\PS7-2\bin\Debug\PS7-2.pdb
+c:\users\adam rosenberg\documents\visual studio 2015\Projects\PS7-2\PS7-2\obj\Debug\PS7-2.csprojResolveAssemblyReference.cache
+c:\users\adam rosenberg\documents\visual studio 2015\Projects\PS7-2\PS7-2\obj\Debug\PS7-2.exe
+c:\users\adam rosenberg\documents\visual studio 2015\Projects\PS7-2\PS7-2\obj\Debug\PS7-2.pdb
+C:\Users\Adam Rosenberg\Source\Repos\PS7-2\PS7-2\bin\Debug\PS7-2.exe.config
+C:\Users\Adam Rosenberg\Source\Repos\PS7-2\PS7-2\obj\Debug\PS7-2.exe
+C:\Users\Adam Rosenberg\Source\Repos\PS7-2\PS7-2\obj\Debug\PS7-2.pdb
