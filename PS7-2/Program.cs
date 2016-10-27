@@ -32,14 +32,26 @@ namespace PS7_2
             for (int i = 1; i < grammmar_length+1; i++)
             {
                 string[] testchar = (reader.ReadLine().Split());
-//                mapped_terminals[i]
-                Console.WriteLine(mapped_terminals[i]);
                 mapped_terminals[i] = testchar[1];
+                Console.WriteLine(mapped_terminals[i]);
+
             }
 
             // parse table values in
-            for (int i = 0; i < UPPER; i++)
+            for (int i = 0; i < nonterminals.Length; i++)
             {
+                string[] table_ints = reader.ReadLine().Split();
+
+                for (int j = 0; j < terminals.Length+1; j++)
+                {
+                    
+                    int int_conv = Convert.ToInt32(table_ints[j]);
+                    grammar[i,j+1] = Convert.ToChar(int_conv);
+                }
+                
+                    
+
+                    
                 
             }
 
