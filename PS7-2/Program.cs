@@ -1,8 +1,10 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PS7_2
 {
@@ -15,7 +17,7 @@ namespace PS7_2
             var nonterminals = langText.ReadLine().ToCharArray();
             var terminals = langText.ReadLine().ToCharArray();
             var grammmar_length = Convert.ToInt32(langText.ReadLine());
-            var grammar = new char[nonterminals.Length, terminals.Length + 2];
+            var grammar = new string[nonterminals.Length, terminals.Length + 2];
             var mapped_terminals = new string[grammmar_length + 1];
 
             
@@ -24,7 +26,7 @@ namespace PS7_2
             // populate columns with the nonterminals
             for (var i = 0; i < nonterminals.Length; i++)
             {
-                grammar[i, 0] = nonterminals[i];
+                grammar[i, 0] = nonterminals[i].ToString();
             }
 
 
@@ -44,7 +46,7 @@ namespace PS7_2
                 for (var j = 0; j < terminals.Length + 1; j++)
                 {
                     var int_conv = Convert.ToInt32(table_ints[j]);
-                    grammar[i, j + 1] = Convert.ToChar(int_conv);
+                    grammar[i, j + 1] = mapped_terminals[int_conv];
                 }
             }
 
@@ -56,28 +58,51 @@ namespace PS7_2
 
                 string inpString = inpText.ReadLine();
                 char[] charstring = inpString.ToCharArray();
-                foreach (var letter in charstring)
+                for (int i = charstring.Length - 1; i >= 0; i--)
                 {
-                    stringStack.Push(letter);
+                    stringStack.Push(charstring[i]);
                 }
-                charStack.Push(grammar[0,0]);
+                //todo populate stack
+                charStack.Push(Convert.ToChar(grammar[0,0]));
                 
                 while (stringStack.Count > 0)
                 {
                     // terminals check
                     
-                    // nonterminals check
+                    // if its a nonterminal on the stack
                     if (nonterminals.Contains(charStack.Peek()))
                     {
-                        for (int i = 0; i < grammar.Length; i++)
+                        char stackNonTerminal = charStack.Peek();
+                        charStack.Pop();
+                        int column = 0;
+                        int row = 0;
+                        // find row value for Nonterminal in table
+                        for (int i = 0; i < nonterminals.Length; i++)
                         {
-                            //TODO iterate through and find the 
-                            for (int j = 0; j < grammar.GetLength(1); j++)
+                            // checks grammar table for correct X
+                            if (Convert.ToChar(grammar[i, 0]) == stackNonTerminal)
                             {
-                                Console.Write(Convert.ToString(grammar[i,j]));
+                                // checks for the right column in grammar from table
+                                row = i;
+                                break;
                             }
                         }
+                        //find column value (Terminal in table
+                        for (int i = 0; i < terminals.Length; i++)
+                        {
+                            if (stringStack.Peek() == terminals[i])
+                            {
+                                column = i + 1;
+                                break;
+                            }
+                        }
+                        for (int i = grammar[row,column].ToCharArray().Length - 1; i >= 0; i--)
+                        {
+                            charStack.Push(grammar[row,column][i]);
+                        }
+                        
                     }
+                    // else if its a terminal on the stack
                     else if (terminals.Contains(charStack.Peek()))
                     {
                         if (stringStack.Peek() == charStack.Peek())
