@@ -15,7 +15,7 @@ namespace PS7_2
             char[] nonterminals = reader.ReadLine().ToCharArray();
             char[] terminals = reader.ReadLine().ToCharArray();
             int grammmar_length = Convert.ToInt32(reader.ReadLine());
-            char[,] grammar = new char[nonterminals.Length, terminals.Length+1];
+            char[,] grammar = new char[nonterminals.Length, terminals.Length+2];
             string[] mapped_terminals = new string[grammmar_length+1];
             
 
