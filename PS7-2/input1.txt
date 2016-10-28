@@ -1,4 +1,6 @@
-aabcdd
-aabccdd
-aaabbccdd
-aaabbccddd
+a
+b
+ab
+aba
+abab
+ba

@@ -96,9 +96,11 @@ namespace PS7_2
                                 break;
                             }
                         }
+                        // loop to push values from grammar onto stack that correspond to the nonterminal
                         for (int i = grammar[row,column].ToCharArray().Length - 1; i >= 0; i--)
                         {
-                            charStack.Push(grammar[row,column][i]);
+                            if(!grammar[row,column].ToCharArray().Contains('-'))
+                                charStack.Push(grammar[row,column][i]);
                         }
                         
                     }
@@ -113,7 +115,25 @@ namespace PS7_2
                         else
                         {
                             Console.WriteLine("no");
+                            break;
                         }
+                    }
+
+                    if (stringStack.Count == 0 && charStack.Count == 0)
+                    {
+                        Console.WriteLine("yes");
+                        break;
+                    }
+                    if(charStack.Count == 0 && stringStack.Count > 0)
+                    { 
+                        Console.WriteLine("no");
+                    
+                        break;
+                    }
+                    if (charStack.Count > 0 && stringStack.Count == 0)
+                    {
+                        Console.WriteLine("no");
+                        break;
 
                     }
                 }

@@ -1,9 +1,11 @@
-ST
-abcd
-4
-S aSd
-S T
-T bTc
-T -
-1 2 0 2 2
-0 3 4 4 4
+SAB
+ab
+5
+S AB
+A aA
+A -
+B bB
+B -
+1 1 1
+2 3 3
+0 4 5
