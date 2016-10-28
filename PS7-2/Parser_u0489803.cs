@@ -1,14 +1,11 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace PS7_2
 {
-    internal class Program
+    internal class Parser_u0489803
     {
         private static void Main(string[] args)
         {
@@ -20,7 +17,6 @@ namespace PS7_2
             var grammar = new string[nonterminals.Length, terminals.Length + 2];
             var mapped_terminals = new string[grammmar_length + 1];
 
-            
 
             // create 2d array for parse table
             // populate columns with the nonterminals
@@ -50,34 +46,34 @@ namespace PS7_2
                 }
             }
 
-            while (!inpText.EndOfStream)
+            while (inpText.Peek() > 0)
             {
-                Stack<char> charStack = new Stack<char>();
-                Stack<char> stringStack = new Stack<char>();
+                var charStack = new Stack<char>();
+                var stringStack = new Stack<char>();
 
 
-                string inpString = inpText.ReadLine();
-                char[] charstring = inpString.ToCharArray();
-                for (int i = charstring.Length - 1; i >= 0; i--)
+                var inpString = inpText.ReadLine();
+                var charstring = inpString.ToCharArray();
+                for (var i = charstring.Length - 1; i >= 0; i--)
                 {
                     stringStack.Push(charstring[i]);
                 }
                 //todo populate stack
-                charStack.Push(Convert.ToChar(grammar[0,0]));
-                
-                while (stringStack.Count > 0)
+                charStack.Push(Convert.ToChar(grammar[0, 0]));
+
+                while (charStack.Count > 0)
                 {
                     // terminals check
-                    
+
                     // if its a nonterminal on the stack
                     if (nonterminals.Contains(charStack.Peek()))
                     {
-                        char stackNonTerminal = charStack.Peek();
+                        var stackNonTerminal = charStack.Peek();
                         charStack.Pop();
-                        int column = 0;
-                        int row = 0;
+                        var column = 0;
+                        var row = 0;
                         // find row value for Nonterminal in table
-                        for (int i = 0; i < nonterminals.Length; i++)
+                        for (var i = 0; i < nonterminals.Length; i++)
                         {
                             // checks grammar table for correct X
                             if (Convert.ToChar(grammar[i, 0]) == stackNonTerminal)
@@ -88,29 +84,51 @@ namespace PS7_2
                             }
                         }
                         //find column value (Terminal in table
-                        for (int i = 0; i < terminals.Length; i++)
+                        if (stringStack.Count > 0)
                         {
-                            if (stringStack.Peek() == terminals[i])
+                            for (var i = 0; i < terminals.Length; i++)
                             {
-                                column = i + 1;
-                                break;
+                                if (stringStack.Peek() == terminals[i])
+                                {
+                                    column = i + 1;
+                                    break;
+                                }
                             }
                         }
-                        // loop to push values from grammar onto stack that correspond to the nonterminal
-                        for (int i = grammar[row,column].ToCharArray().Length - 1; i >= 0; i--)
+                        else
                         {
-                            if(!grammar[row,column].ToCharArray().Contains('-'))
-                                charStack.Push(grammar[row,column][i]);
+                            column = terminals.Length + 1;
                         }
-                        
+
+                        // loop to push values from grammar onto stack that correspond to the nonterminal
+                        if (grammar[row, column] != null)
+                        {
+                            for (var i = grammar[row, column].ToCharArray().Length - 1; i >= 0; i--)
+                            {
+                                charStack.Push(grammar[row, column][i]);
+                                if (charStack.Peek() == '-')
+                                {
+                                    charStack.Pop();
+                                }
+                            }
+                        }
                     }
                     // else if its a terminal on the stack
                     else if (terminals.Contains(charStack.Peek()))
                     {
-                        if (stringStack.Peek() == charStack.Peek())
+                        if (stringStack.Count > 0 && charStack.Peek() > 0)
+
                         {
-                            stringStack.Pop();
-                            charStack.Pop();
+                            if (stringStack.Peek() == charStack.Peek())
+                            {
+                                stringStack.Pop();
+                                charStack.Pop();
+                            }
+                            else
+                            {
+                                Console.WriteLine("no");
+                                break;
+                            }
                         }
                         else
                         {
@@ -124,23 +142,15 @@ namespace PS7_2
                         Console.WriteLine("yes");
                         break;
                     }
-                    if(charStack.Count == 0 && stringStack.Count > 0)
-                    { 
-                        Console.WriteLine("no");
-                    
-                        break;
-                    }
-                    if (charStack.Count > 0 && stringStack.Count == 0)
+                    if (charStack.Count == 0 && stringStack.Count > 0)
                     {
                         Console.WriteLine("no");
-                        break;
 
+                        break;
                     }
                 }
-
             }
 
-            
 
             Console.ReadLine();
             // read in remaining lines using the parsed int
@@ -152,7 +162,5 @@ namespace PS7_2
             //                Console.ReadLine();
             //            }
         }
-
-        
     }
 }
